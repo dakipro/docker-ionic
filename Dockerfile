@@ -42,13 +42,12 @@ ENV JAVA_HOME ${JAVA_HOME:-/usr/lib/jvm/java-${JAVA_VERSION}-oracle}
 
 # Install Java.
 RUN \
-apt-get update
-apt-get -y install software-properties-common
+apt-get -qqy install software-properties-common
 add-apt-repository -y ppa:webupd8team/java
 echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
 echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
-apt-get update
-apt-get -y install oracle-java8-installer
+apt-get update -qqy && \
+apt-get install -qqy install oracle-java8-installer
 
 # -----------------------------------------------------------------------------
 # Install Android / Android SDK / Android SDK elements
