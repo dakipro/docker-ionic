@@ -1,6 +1,6 @@
-
-FROM ubuntu:19.10
-MAINTAINER Juergen Schackmann
+  
+FROM ubuntu:18.04
+MAINTAINER Juan Darien Macías Hernández <darienmh@gmail.com>
 
 # -----------------------------------------------------------------------------
 # General environment variables
