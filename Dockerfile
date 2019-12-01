@@ -38,8 +38,8 @@ RUN \
   add-apt-repository ppa:webupd8team/java -y && \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | \
   /usr/bin/debconf-set-selections && \
-  apt-get update -qqy && \
-  apt-get install -qqy --allow-unauthenticated oracle-java${JAVA_VERSION}-installer
+  apt-get update -y && \
+  apt-get install -y --allow-unauthenticated oracle-java${JAVA_VERSION}-installer
 # -----------------------------------------------------------------------------
 # Install Android / Android SDK / Android SDK elements
 # -----------------------------------------------------------------------------
