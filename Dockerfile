@@ -33,22 +33,13 @@ ENV JAVA_VERSION ${JAVA_VERSION:-8}
 
 ENV JAVA_HOME ${JAVA_HOME:-/usr/lib/jvm/java-${JAVA_VERSION}-oracle}
 
-#RUN \
- # add-apt-repository ppa:webupd8team/java -y && \
-  #echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | \
-  #/usr/bin/debconf-set-selections && \
-  #apt-get update -qqy && \
-  #apt-get install -qqy --allow-unauthenticated oracle-java${JAVA_VERSION}-installer
-
-# Install Java.
 RUN \
-apt-get -qqy install software-properties-common
-add-apt-repository -y ppa:webupd8team/java
-echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
-apt-get update -qqy && \
-apt-get install -qqy install oracle-java8-installer
-
+  apt-get -qqy install software-properties-common
+  add-apt-repository ppa:webupd8team/java -y && \
+  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | \
+  /usr/bin/debconf-set-selections && \
+  apt-get update -qqy && \
+  apt-get install -qqy --allow-unauthenticated oracle-java${JAVA_VERSION}-installer
 # -----------------------------------------------------------------------------
 # Install Android / Android SDK / Android SDK elements
 # -----------------------------------------------------------------------------
