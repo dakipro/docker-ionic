@@ -34,7 +34,7 @@ ENV JAVA_VERSION ${JAVA_VERSION:-8}
 ENV JAVA_HOME ${JAVA_HOME:-/usr/lib/jvm/java-${JAVA_VERSION}-oracle}
 
 RUN \
-  apt-get -qqy install software-properties-common
+  apt-get -qqy install software-properties-common && \
   add-apt-repository ppa:webupd8team/java -y && \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | \
   /usr/bin/debconf-set-selections && \
