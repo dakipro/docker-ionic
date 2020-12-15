@@ -42,48 +42,56 @@ RUN \
 # Install Android / Android SDK / Android SDK elements
 # -----------------------------------------------------------------------------
 
-ENV ANDROID_HOME /opt/android-sdk-linux
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:/opt/tools
 
-ARG ANDROID_PLATFORMS_VERSION
-ENV ANDROID_PLATFORMS_VERSION ${ANDROID_PLATFORMS_VERSION:-25}
 
-ARG ANDROID_BUILD_TOOLS_VERSION
-ENV ANDROID_BUILD_TOOLS_VERSION ${ANDROID_BUILD_TOOLS_VERSION:-25.0.3}
+# TODO: Fix android platform things  
 
-RUN \
-  echo ANDROID_HOME=${ANDROID_HOME} >> /etc/environment && \
-  dpkg --add-architecture i386 && \
-  apt-get update -qqy && \
-  apt-get install -qqy --allow-unauthenticated\
-          gradle  \
-          libc6-i386 \
-          lib32stdc++6 \
-          lib32gcc1 \
-          lib32ncurses5 \
-          lib32z1 \
-          qemu-kvm \
-          kmod && \
-  cd /opt && \
-  mkdir android-sdk-linux && \
-  cd android-sdk-linux && \
-  curl -SLo sdk-tools-linux.zip https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip && \
-  unzip sdk-tools-linux.zip && \
-  rm -f sdk-tools-linux.zip && \
-  chmod 777 ${ANDROID_HOME} -R  && \
-  mkdir -p ${ANDROID_HOME}/licenses && \
-  echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > ${ANDROID_HOME}/licenses/android-sdk-license && \
-  sdkmanager "tools" && \  
-  sdkmanager "platform-tools" && \
-  sdkmanager "platforms;android-${ANDROID_PLATFORMS_VERSION}" && \
-  sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
+
+
+#ENV ANDROID_HOME /opt/android-sdk-linux
+#ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:/opt/tools
+
+#ARG ANDROID_PLATFORMS_VERSION
+#ENV ANDROID_PLATFORMS_VERSION ${ANDROID_PLATFORMS_VERSION:-26.1.1}
+
+#ARG ANDROID_BUILD_TOOLS_VERSION
+#ENV ANDROID_BUILD_TOOLS_VERSION ${ANDROID_BUILD_TOOLS_VERSION:-28.0.3}
+
+#RUN \
+#  echo ANDROID_HOME=${ANDROID_HOME} >> /etc/environment && \
+#  dpkg --add-architecture i386 && \
+#  apt-get update -qqy && \
+#  apt-get install -qqy --allow-unauthenticated\
+#          gradle  \
+#          libc6-i386 \
+#          lib32stdc++6 \
+#          lib32gcc1 \
+#          lib32ncurses5 \
+#          lib32z1 \
+#          qemu-kvm \
+#          kmod && \
+#  cd /opt && \
+#  mkdir android-sdk-linux && \
+#  cd android-sdk-linux && \
+#  curl -SLo sdk-tools-linux.zip https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip && \
+#  unzip sdk-tools-linux.zip && \
+#  rm -f sdk-tools-linux.zip && \
+#  chmod 777 ${ANDROID_HOME} -R  && \
+#  mkdir -p ${ANDROID_HOME}/licenses && \
+#  echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > ${ANDROID_HOME}/licenses/android-sdk-license && \
+
+#  yes | sdkmanager --licenses \
+#  sdkmanager "tools" && \  
+#  sdkmanager "platform-tools" && \
+#  sdkmanager "platforms;android-${ANDROID_PLATFORMS_VERSION}" && \
+#  sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
 
 
 # -----------------------------------------------------------------------------
 # Install Node, NPM, yarn
 # -----------------------------------------------------------------------------
 ARG NODE_VERSION
-ENV NODE_VERSION ${NODE_VERSION:-12.13.1} 
+ENV NODE_VERSION ${NODE_VERSION:-14.10.1} 
 
 ARG NPM_VERSION
 ENV NPM_VERSION ${NPM_VERSION:-6.14.8}
@@ -168,8 +176,9 @@ RUN \
 # -----------------------------------------------------------------------------
 # Copy start.sh and set permissions 
 # -----------------------------------------------------------------------------
-COPY start.sh /start.sh
-RUN chown ${USER}:${USER} /start.sh && chmod 777 /start.sh
+# TODO: This wont copy on my pc, figure what this is and why do we need it
+#COPY start.sh /start.sh
+#RUN chown ${USER}:${USER} /start.sh && chmod 777 /start.sh
 
 
 # -----------------------------------------------------------------------------
@@ -184,7 +193,7 @@ USER ${USER}
 # -----------------------------------------------------------------------------
 
 ARG CORDOVA_VERSION
-ENV CORDOVA_VERSION ${CORDOVA_VERSION:-7.0.1}
+ENV CORDOVA_VERSION ${CORDOVA_VERSION:-9.0.0}
 
 ARG IONIC_VERSION
 ENV IONIC_VERSION ${IONIC_VERSION:-4.12.0}
